@@ -18,7 +18,7 @@ export const FullPost = () => {
   console.log(data, 'data');
   React.useEffect(() => {
     try {
-      axios.get(`http://localhost:4000/posts/${id}`).then(res => {
+      axios.get(`process.env.REACT_APP_API_URL${id}`).then(res => {
         setData(res.data);
         setLoading(false);
       })
@@ -42,7 +42,7 @@ export const FullPost = () => {
       <Post
         id={data._id}
         title={data.title}
-        imageUrl={`http://localhost:4000${data.imageUrl}`}
+        imageUrl={`${data.imageUrl}`}
         user={data.user}
         createdAt={data.createdAt}
         viewsCount={data.viewsCount}
