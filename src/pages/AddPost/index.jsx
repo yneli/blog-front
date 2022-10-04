@@ -1,14 +1,15 @@
 import React from 'react';
+import { useNavigate, Navigate, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import SimpleMDE from 'react-simplemde-editor';
-import { selectIsAuth } from "../../redux/slices/auth";
-import { useSelector } from 'react-redux';
+
 import 'easymde/dist/easymde.min.css';
-import styles from './AddPost.module.scss';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { selectIsAuth } from '../../redux/slices/auth';
 import axios from '../../axios';
+import styles from './AddPost.module.scss';
 
 export const AddPost = () => {
   const { id } = useParams();
@@ -23,7 +24,7 @@ export const AddPost = () => {
 
   const isEditing = Boolean(id);
 
-const handleChangeFile = async (event) => {
+  const handleChangeFile = async (event) => {
     try {
       const formData = new FormData();
       const file = event.target.files[0];
@@ -35,8 +36,9 @@ const handleChangeFile = async (event) => {
       alert('Ошибка при загрузке файла!');
     }
   };
-  const onClickRemoveImage =  (event) => {
-    setImageUrl('')
+
+  const onClickRemoveImage = () => {
+    setImageUrl('');
   };
 
   const onChange = React.useCallback((value) => {
@@ -66,6 +68,7 @@ const handleChangeFile = async (event) => {
       alert('Ошибка при создании статьи!');
     }
   };
+
   React.useEffect(() => {
     if (id) {
       axios
@@ -97,7 +100,8 @@ const handleChangeFile = async (event) => {
     }),
     [],
   );
-  if (!isAuth) {
+
+  if (!window.localStorage.getItem('token') && !isAuth) {
     return <Navigate to="/" />;
   }
 
