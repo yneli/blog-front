@@ -15,11 +15,11 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async() => {
 });
 
 export const delPosts = createAsyncThunk('posts/delPosts', async(id) => {
-   const { data } = await axios.delete(`http://localhost:4000/posts/${id}`)
+   const { data } = await axios.delete(`/posts/${id}`)
 });
 
 export const fetchTags = createAsyncThunk('posts/fetchTags', async() => {
-    const { data } = await axios.get('http://localhost:4000/posts/tags');
+    const { data } = await axios.get('/posts/tags');
     return data
 })
 
